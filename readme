@@ -1,0 +1,8 @@
+Implemetnar con Java un proyecto de hilos Consumidores y Productores que escriban y lean en un buffer compartido por todos usando los métodos wait y notify.
+
+En esta actividad es necesario crear una solución para el problema del productor/consumidor utilizando Java. En este problema tenemos uno o varios threads que producen datos a un ritmo diferente. Estos datos se almacenan en un buffer que será consumido a un ritmo diferente por cada thread.
+
+Requisitos de la implementación:
+- Utiliza wait and notify para implementar esta solución.
+- Cuando arranque el programa se preguntará al usuario cuántos productores utilizar.
+- Cuando arranque el programa se preguntará al usuario cuántos consumidores utilizar.
