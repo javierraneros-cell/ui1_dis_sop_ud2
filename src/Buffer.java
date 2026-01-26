@@ -27,4 +27,19 @@ public class Buffer {
         return producto;
     }
 
+    public synchronized String pintaEstado() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("| ");
+    for (int i = 0; i < CAPACIDAD_BUFFER; i++) {
+        if (i < posicionBuffer) {
+            sb.append("[").append(arrayBuffer[i]).append("]");
+        } else {
+            sb.append("[ ]");
+        }
+    }
+    sb.append(" |");
+    return sb.toString();
+}
+
+
 }

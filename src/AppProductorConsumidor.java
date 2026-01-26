@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AppProductorConsumidor {
 
@@ -12,6 +13,7 @@ public class AppProductorConsumidor {
     public static int MIN_RITMO_CONSUMIDOR = 500;
     public static int MAX_RITMO_CONSUMIDOR = 900;
     
+    public static final int INT_ANCHO_TEXTO = 15;
 
     private static List<Productor>  arrayHilosProductores   = new ArrayList<>();
     private static List<Consumidor> arrayHilosConsumidores  = new ArrayList<>();
@@ -25,12 +27,12 @@ public class AppProductorConsumidor {
         Buffer buffer = new Buffer();
 
         for (int i = 0; i < numHilosProductores; i++) {
-            Productor hiloProductor = new Productor(i, buffer);
+            Productor hiloProductor = new Productor(i, buffer, getRitmoProduccion());
             arrayHilosProductores.add(hiloProductor);
         }
 
         for (int i = 0; i < numHilosConsumidores; i++) {
-            Consumidor hiloConsumidor = new Consumidor(i, buffer);
+            Consumidor hiloConsumidor = new Consumidor(i, buffer, getRitmoConsumicion());
             arrayHilosConsumidores.add(hiloConsumidor);
         }
 
@@ -46,4 +48,22 @@ public class AppProductorConsumidor {
             hiloConsumidor.start();
         }
     }
+
+    private static int getRitmoProduccion(){
+        return ThreadLocalRandom.current().nextInt( AppProductorConsumidor.MIN_RITMO_PRODUCTOR, 
+                                                    AppProductorConsumidor.MAX_RITMO_PRODUCTOR );
+    }
+    
+    private static int getRitmoConsumicion(){
+        return ThreadLocalRandom.current().nextInt( AppProductorConsumidor.MIN_RITMO_CONSUMIDOR, 
+                                                    AppProductorConsumidor.MAX_RITMO_CONSUMIDOR );
+    }
+
+    public static String ajustarAncho(String texto) {
+        if (texto.length() >= INT_ANCHO_TEXTO) {
+            return texto.substring(0, INT_ANCHO_TEXTO);
+        }
+        return String.format("%-" + INT_ANCHO_TEXTO + "s", texto);
+    }
+
 }

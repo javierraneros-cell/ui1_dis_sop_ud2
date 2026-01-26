@@ -1,16 +1,13 @@
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Consumidor extends Thread {
 
     private final Buffer buffer;
     private final int idHilo;
-    private int ritmo;
+    private int ritmoConsumo;
 
-    public Consumidor(int idHilo, Buffer buffer){
-        this.idHilo = idHilo;
+    public Consumidor(int idHilo, Buffer buffer, int ritmoConsumo){
+        this.idHilo = idHilo + 1;
         this.buffer = buffer;
-        ritmo = ThreadLocalRandom.current().nextInt(AppProductorConsumidor.MIN_RITMO_CONSUMIDOR, 
-                                                    AppProductorConsumidor.MAX_RITMO_CONSUMIDOR);
+        this.ritmoConsumo = ritmoConsumo;
     }
 
     @Override
@@ -18,8 +15,8 @@ public class Consumidor extends Thread {
         while (true) {
             try {
                 int valorConsumido = buffer.ejecutaConsumir();
-                System.out.println(String.format("Producto consumido por hilo Consumidor[%s]: %s", idHilo, valorConsumido));
-                Thread.sleep(ritmo);
+                System.out.println( String.format("%s \t%s", AppProductorConsumidor.ajustarAncho( String.format("CONS[%s]: %s", idHilo, valorConsumido)), buffer.pintaEstado()));
+                Thread.sleep(ritmoConsumo);
             } catch (InterruptedException e) {
                 System.out.println(String.format("Se ha producido un error en el hilo Consumidor[%s] al pausar: %s", idHilo, e.getMessage()));
             }            
