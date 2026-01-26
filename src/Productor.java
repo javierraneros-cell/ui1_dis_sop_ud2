@@ -18,7 +18,7 @@ public class Productor extends Thread {
             try {
                 int valorProducido = producto++;
                 buffer.ejecutaProducir(valorProducido);
-                System.out.println( String.format("%s \t%s", AppProductorConsumidor.ajustarAncho( String.format("PROD[%s]: %s", idHilo, valorProducido)), buffer.pintaEstado()));
+                System.out.println( String.format("%s >> %s", AppProductorConsumidor.ajustarAncho( String.format("PROD[%s]: %s", idHilo, valorProducido)), buffer.pintaEstado()));
                 Thread.sleep(ritmoProduccion);
             } catch (InterruptedException e) {
                 System.out.println(String.format("Se ha producido un error en el hilo Productor[%s] al pausar: %s", idHilo, e.getMessage()));
@@ -28,6 +28,10 @@ public class Productor extends Thread {
 
     public int getIdHilo() {
         return idHilo;
+    }
+
+    public int getRitmoProduccion(){
+        return ritmoProduccion;
     }
 
 }

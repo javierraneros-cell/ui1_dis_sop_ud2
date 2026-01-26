@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AppProductorConsumidor {
@@ -7,21 +8,26 @@ public class AppProductorConsumidor {
     private static int numHilosProductores;
     private static int numHilosConsumidores;
 
-    public static int MIN_RITMO_PRODUCTOR = 500;
-    public static int MAX_RITMO_PRODUCTOR = 900;
+    public static int MIN_RITMO_PRODUCTOR = 100;
+    public static int MAX_RITMO_PRODUCTOR = 200;
     
-    public static int MIN_RITMO_CONSUMIDOR = 500;
-    public static int MAX_RITMO_CONSUMIDOR = 900;
+    public static int MIN_RITMO_CONSUMIDOR = 100;
+    public static int MAX_RITMO_CONSUMIDOR = 200;
     
     public static final int INT_ANCHO_TEXTO = 15;
 
     private static List<Productor>  arrayHilosProductores   = new ArrayList<>();
     private static List<Consumidor> arrayHilosConsumidores  = new ArrayList<>();
 
+    private static final Scanner scanner = new Scanner(System.in);
+
+    private static final String MENSAJE_NUM_HILOS_PRODUCTOR = "Introduzca el numero de hilos PRODUCTORES: ";
+    private static final String MENSAJE_NUM_HILOS_CONSUMIDOR = "Introduzca el numero de hilos CONSUMIDORES ";
+
     public static void main (String[] args){
 
-        numHilosProductores = 10;
-        numHilosConsumidores = 2;
+        numHilosProductores = solicitaNumHilos(MENSAJE_NUM_HILOS_PRODUCTOR);
+        numHilosConsumidores = solicitaNumHilos(MENSAJE_NUM_HILOS_CONSUMIDOR);
 
         //Creamos el buffer a inyectar en los hilos consumidores y productores:
         Buffer buffer = new Buffer();
@@ -38,15 +44,17 @@ public class AppProductorConsumidor {
 
         //Comenzamos todos los hilos Productores:
         for(Productor hiloProductor : arrayHilosProductores){
-            System.out.println(String.format("Hilo Productor[%s] iniciado ...", hiloProductor.getIdHilo()));
+            System.out.println(String.format("Hilo Productor[%s] iniciado con ritmo %s...", hiloProductor.getIdHilo(), hiloProductor.getRitmoProduccion()));
             hiloProductor.start();
         }
+        System.out.println("Todos los hilos PRODUCTORES han sido creados ...");
 
         //Comenzamos todos los hilos Consumidores:
         for(Consumidor hiloConsumidor : arrayHilosConsumidores){
-            System.out.println(String.format("Hilo Consumidor[%s] iniciado ...", hiloConsumidor.getIdHilo()));
+            System.out.println(String.format("Hilo Consumidor[%s] iniciado con ritmo %s ...", hiloConsumidor.getIdHilo(), hiloConsumidor.getRitmoConsumo()));
             hiloConsumidor.start();
         }
+        System.out.println("Todos los hilos CONSUMIDORES han sido creados ...");
     }
 
     private static int getRitmoProduccion(){
@@ -64,6 +72,25 @@ public class AppProductorConsumidor {
             return texto.substring(0, INT_ANCHO_TEXTO);
         }
         return String.format("%-" + INT_ANCHO_TEXTO + "s", texto);
+    }
+
+    private static int solicitaNumHilos(String mensaje){
+        String numHilos;
+        do{
+            System.out.print(String.format("\n\t%14s", mensaje ));
+            numHilos = scanner.nextLine();
+            if ( numHilos.isEmpty() ) {
+                System.err.println("Introduzca un numero de hilos correcto...");
+            }else {
+                try {
+                    Integer.parseInt(numHilos);
+                } catch (Exception e) {
+                    System.err.println("Introduzca un numero de hilos correcto...");
+                    numHilos = "";
+                }
+            }
+        }while(numHilos.isEmpty() );
+        return Integer.parseInt(numHilos);
     }
 
 }
