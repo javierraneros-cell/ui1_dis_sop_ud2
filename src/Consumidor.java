@@ -16,6 +16,7 @@ public class Consumidor extends Thread {
             try {
                 int valorConsumido = buffer.ejecutaConsumir();
                 System.out.println( String.format("%s << %s", AppProductorConsumidor.ajustarAncho( String.format("CONS[%s]: %s", idHilo, valorConsumido)), buffer.pintaEstado()));
+                Logger.log(String.format(String.format("CONS[%s]", idHilo)));
                 Thread.sleep(ritmoConsumo);
             } catch (InterruptedException e) {
                 System.out.println(String.format("Se ha producido un error en el hilo Consumidor[%s] al pausar: %s", idHilo, e.getMessage()));
