@@ -8,12 +8,12 @@ public class AppProductorConsumidor {
     private static int numHilosProductores;
     private static int numHilosConsumidores;
 
-    public static final int CAPACIDAD_BUFFER = 40;
+    public static final int CAPACIDAD_BUFFER = 50;
 
-    public static int MIN_RITMO_PRODUCTOR = 100;
+    public static int MIN_RITMO_PRODUCTOR = 500;
     public static int MAX_RITMO_PRODUCTOR = 900;
     
-    public static int MIN_RITMO_CONSUMIDOR = 100;
+    public static int MIN_RITMO_CONSUMIDOR = 500;
     public static int MAX_RITMO_CONSUMIDOR = 900;
 
     private static List<Productor>  arrayHilosProductores   = new ArrayList<>();
