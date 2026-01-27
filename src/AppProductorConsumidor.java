@@ -86,9 +86,11 @@ public class AppProductorConsumidor {
                 System.err.println("Introduzca un numero de hilos correcto...");
             }else {
                 try {
-                    Integer.parseInt(numHilos);
+                    if ( Integer.parseInt(numHilos) <= 0){
+                        throw new Exception("Numero mayor de 0");
+                    } 
                 } catch (Exception e) {
-                    System.err.println("Introduzca un numero de hilos correcto...");
+                    System.err.println("Introduzca un numero de hilos correcto y mayor de 0...");
                     numHilos = "";
                 }
             }
